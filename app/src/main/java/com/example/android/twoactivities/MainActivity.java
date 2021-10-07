@@ -20,7 +20,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * Version of TwoActivities app that prints messages to the logs
  * on Activity lifecycle state changes.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     // Class name for Log tag
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     // Unique tag required for the intent extra
@@ -95,6 +98,56 @@ public class MainActivity extends AppCompatActivity {
                 mReplyTextView.setVisibility(View.VISIBLE);
             }
         }
+
+        // Create the spinner.
+        Spinner spinner = findViewById(R.id.label_spinner);
+        if (spinner != null) {
+            spinner.setOnItemSelectedListener(this);
+        }
+
+        // Create ArrayAdapter using the string array and default
+        // spinner layout.
+        ArrayAdapter<CharSequence> adapter =
+                ArrayAdapter.createFromResource(
+                        this, R.array.labels_array,
+                        android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears.
+        adapter.setDropDownViewResource
+                (android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner.
+        if (spinner != null) {
+            spinner.setAdapter(adapter);
+        }
+    }
+
+    /**
+     * Retrieves the selected item in the spinner using getItemAtPosition,
+     * and assigns it to mSpinnerLabel.
+     *
+     * @param adapterView   The adapter for the spinner, where the selection
+     *                      occurred.
+     * @param view          The view within the adapterView that was clicked.
+     * @param i             The position of the view in the adapter.
+     * @param l             The row id of the item that is selected (not
+     *                      used here).
+     */
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView,
+                               View view, int i, long l) {
+        //mSpinnerLabel = adapterView.getItemAtPosition(i).toString();
+        //showText(view);
+        Log.d(LOG_TAG, "spinner item selected: " + adapterView.getItemAtPosition(i).toString());
+    }
+
+    /**
+     * Logs the fact that nothing was selected in the spinner.
+     *
+     * @param adapterView   The adapter for the spinner, where the selection
+     *                      should have occurred.
+     */
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        Log.d(LOG_TAG, "onNothingSelected...");
     }
 
     /**

@@ -23,6 +23,15 @@
     android:layout_height="match_parent"
     tools:context="com.example.android.twoactivities.MainActivity">
 
+    <Spinner
+        android:id="@+id/label_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/text_header_reply"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/text_header_reply"
         android:layout_width="wrap_content"
